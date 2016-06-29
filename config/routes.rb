@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   get 'help'    => 'home#help'
   get 'about'   => 'home#about'
   get 'signup'  => 'users#new'
+  resources :users
 end
