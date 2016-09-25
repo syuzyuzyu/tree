@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                :integer          not null, primary key
+#  name              :string
+#  email             :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  password_digest   :string
+#  remember_digest   :string
+#  admin             :boolean          default(FALSE)
+#  activation_digest :string
+#  activated         :boolean          default(FALSE)
+#  activated_at      :datetime
+#  reset_digest      :string
+#  reset_sent_at     :datetime
+#
+
 class User < ActiveRecord::Base
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
@@ -30,7 +49,7 @@ class User < ActiveRecord::Base
 
     # 渡されたトークンがダイジェストと一致したらtrueを返す
   def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
+    digest = send("#{attribute}_digest")#rubyのメタプログラミングによるところ at 10.1.3
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
