@@ -11,7 +11,82 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729123611) do
+ActiveRecord::Schema.define(version: 20160928044843) do
+
+  create_table "experiences", force: :cascade do |t|
+    t.integer  "person_id"
+    t.integer  "micropost_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "experiences", ["micropost_id"], name: "index_experiences_on_micropost_id"
+  add_index "experiences", ["person_id", "micropost_id"], name: "index_experiences_on_person_id_and_micropost_id", unique: true
+  add_index "experiences", ["person_id"], name: "index_experiences_on_person_id"
+
+  create_table "genes", force: :cascade do |t|
+    t.integer  "person_id"
+    t.integer  "connection_id"
+    t.string   "type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "genes", ["connection_id"], name: "index_genes_on_connection_id"
+  add_index "genes", ["person_id", "connection_id", "type"], name: "index_genes_on_person_id_and_connection_id_and_type", unique: true
+  add_index "genes", ["person_id"], name: "index_genes_on_person_id"
+
+  create_table "invites", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "invites", ["person_id"], name: "index_invites_on_person_id"
+  add_index "invites", ["user_id", "person_id"], name: "index_invites_on_user_id_and_person_id", unique: true
+  add_index "invites", ["user_id"], name: "index_invites_on_user_id"
+
+  create_table "marriages", force: :cascade do |t|
+    t.integer  "person_id"
+    t.integer  "spouse_id"
+    t.date     "start"
+    t.date     "end"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "marriages", ["person_id", "spouse_id"], name: "index_marriages_on_person_id_and_spouse_id", unique: true
+  add_index "marriages", ["person_id"], name: "index_marriages_on_person_id"
+  add_index "marriages", ["spouse_id"], name: "index_marriages_on_spouse_id"
+
+  create_table "microposts", force: :cascade do |t|
+    t.text     "content"
+    t.string   "image"
+    t.boolean  "delete_flg"
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "microposts", ["created_at"], name: "index_microposts_on_person_id_and_created_at"
+
+  create_table "people", force: :cascade do |t|
+    t.string   "image"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.date     "birth_date"
+    t.date     "dead"
+    t.integer  "gender"
+    t.string   "birth_place"
+    t.string   "city"
+    t.string   "cuntry"
+    t.text     "summary"
+    t.string   "occupation"
+    t.boolean  "delete_flg"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

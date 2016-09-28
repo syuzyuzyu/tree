@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: genes
+#
+#  id            :integer          not null, primary key
+#  person_id     :integer
+#  connection_id :integer
+#  type          :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person_id: 
+  connection_id: 
+  type: 
+
+two:
+  person_id: 
+  connection_id: 
+  type: 

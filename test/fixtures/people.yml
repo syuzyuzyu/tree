@@ -1,0 +1,50 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id          :integer          not null, primary key
+#  image       :string
+#  first_name  :string
+#  last_name   :string
+#  birth_date  :date
+#  dead        :date
+#  gender      :integer
+#  birth_place :string
+#  city        :string
+#  cuntry      :string
+#  summary     :text
+#  occupation  :string
+#  delete_flg  :boolean
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  image: MyString
+  first_name: MyString
+  last_name: MyString
+  birth_date: 2016-09-25
+  dead: 2016-09-25
+  gender: 1
+  birth_place: MyString
+  city: MyString
+  cuntry: MyString
+  summary: MyText
+  occupation: MyString
+  delete_flg: false
+
+two:
+  image: MyString
+  first_name: MyString
+  last_name: MyString
+  birth_date: 2016-09-25
+  dead: 2016-09-25
+  gender: 1
+  birth_place: MyString
+  city: MyString
+  cuntry: MyString
+  summary: MyText
+  occupation: MyString
+  delete_flg: false

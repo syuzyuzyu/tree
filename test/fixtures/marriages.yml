@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: marriages
+#
+#  id         :integer          not null, primary key
+#  person_id  :integer
+#  spouse_id  :integer
+#  start      :date
+#  end        :date
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person_id: 
+  spouse_id: 
+  start: 2016-09-26
+  end: 2016-09-26
+
+two:
+  person_id: 
+  spouse_id: 
+  start: 2016-09-26
+  end: 2016-09-26

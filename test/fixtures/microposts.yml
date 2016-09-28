@@ -1,0 +1,28 @@
+# == Schema Information
+#
+# Table name: microposts
+#
+#  id         :integer          not null, primary key
+#  content    :text
+#  image      :string
+#  delete_flg :boolean
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person_id: 
+  content: MyText
+  image: MyString
+  delete_flg: false
+  title: MyString
+
+two:
+  person_id: 
+  content: MyText
+  image: MyString
+  delete_flg: false
+  title: MyString

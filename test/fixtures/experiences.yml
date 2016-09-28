@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: experiences
+#
+#  id           :integer          not null, primary key
+#  person_id    :integer
+#  micropost_id :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person_id: 
+  micropost_id: 
+
+two:
+  person_id: 
+  micropost_id: 
