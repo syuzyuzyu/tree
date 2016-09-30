@@ -1,5 +1,25 @@
-<% provide(:title, @user.name) %>
-<h1>
-  <%= gravatar_for @user %>
-  <%= @user.name %>
-</h1>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+      <span>
+        <%= link_to "follow", edit_user_path(@user.id) %>
+      </span>
+      <dl>
+        <dt>メールアドレス</dt><dd><%= @user.email %></dd>
+        <dt>プロフィール</dt><dd><%= @user.admin %></dd>
+        <dt>場所</dt><dd><%= @user.created_at %></dd>
+        <dt>投稿数</dt><dd></dd>
+      </dl>
+    </section>
+  </aside>
+  <div class="col-md-8">
+      <h3>Microposts</h3>
+      <ol class="microposts">
+        <%= @user.person %>
+      </ol>
+  </div>
+</div>
