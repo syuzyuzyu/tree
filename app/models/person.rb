@@ -21,10 +21,11 @@
 
 class Person < ActiveRecord::Base
     belongs_to :user
-    has_many :following_experiences, class_name: "Experience", 
+    mount_uploader :image, ImageUploader
+    has_many :experiences, class_name: "Experience", 
                                     foreign_key: "person_id", 
                                     dependent: :destroy
-    has_many :following_microposts, through: :following_experiences, source: :micropost
+    has_many :following_microposts, through: :experiences, source: :micropost
     
     
     has_many :following_marriages, class_name: "Marriage", 
@@ -53,5 +54,13 @@ class Person < ActiveRecord::Base
     
     def share(micropost)
         following_experiences.create(micropost_id: micropost.id)
+    end
+    
+    def experience(param)
+        self.transaction do
+            micropost = following_microposts.build(param)
+            experiences.find_or_create_by(micropost_id: micropost.id)
+            micropost.save!
+        end
     end
 end

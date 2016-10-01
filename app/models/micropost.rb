@@ -12,6 +12,7 @@
 #
 
 class Micropost < ActiveRecord::Base
+    mount_uploader :image, ImageUploader
     has_many :followed_experiences, class_name: "Experience", 
                                     foreign_key: "micropost_id", 
                                     dependent: :destroy

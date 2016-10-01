@@ -27,6 +27,9 @@ module SessionsHelper
       end
     end
   end
+  def current_person
+    @current_person = current_user.person
+  end
   # ユーザーがログインしていればtrue、その他ならfalseを返す
   def logged_in?
     !current_user.nil?

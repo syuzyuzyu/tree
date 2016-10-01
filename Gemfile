@@ -14,6 +14,9 @@ gem 'turbolinks',   '2.3.0'
 gem 'jbuilder',     '2.2.3'
 gem 'sdoc',         '0.4.0', group: :doc
 gem 'annotate'
+gem 'carrierwave'
+#エラーが出たがここdここで解消、感謝＠http://yatta47.hateblo.jp/entry/2015/05/11/080000
+gem 'rmagick'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'
