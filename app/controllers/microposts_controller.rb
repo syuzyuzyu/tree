@@ -12,9 +12,21 @@ class MicropostsController < ApplicationController
         end
     end
   
-    #最初はcreateメソッドをこのように書いてい書いていた
+    #最初はcreateメソッドをこのように書いていた
     def sample
-        #Nested Transactionってよくわからん from http://qiita.com/huydx/items/d946970d130b7dabe7ec
+        #Nested Transactionってよくわからん from http://qiita.com/huydx/items/d946970d130b7dabe7ec 
+        #２モデル回たら2モデルともロールバックする
+        Person.transaction do
+            User.transaction do
+                @preson.save!
+                @user.save!
+            end
+        end
+        rescue => e
+        render 'new'
+        ActiveRecord::Rollback
+        
+        
         Person.transaction do
             @micropost = current_person.following_microposts.build(micropost_params)
             debugger

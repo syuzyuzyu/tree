@@ -28,39 +28,31 @@ class Person < ActiveRecord::Base
     has_many :following_microposts, through: :experiences, source: :micropost
     
     
-    has_many :following_marriages, class_name: "Marriage", 
+    has_many :marriages, class_name: "Marriage", 
                                     foreign_key: "person_id", 
                                     dependent: :destroy
-    has_many :following_spouses, through: :following_marriages, source: :spouse
+    has_many :following_spouses, through: :marriages, source: :spouse
     
-    has_many :followed_marriages, class_name: "Marriage", 
+    has_many :marriaged, class_name: "Marriage", 
                                     foreign_key: "spouse_id", 
                                     dependent: :destroy
-    has_many :followed_spouses, through: :followed_marriages, source: :person
+    has_many :followed_spouses, through: :marriaged, source: :person
     
     
     has_many :genes, class_name: "Gene", foreign_key: "person_id", dependent: :destroy
     has_many :connection, through: :genes, source: :connection
     
-    has_many :following_parents, class_name: "Parent", 
+    has_many :parents, class_name: "Parent", 
                                     foreign_key: "person_id", 
                                     dependent: :destroy
-    has_many :my_parents, through: :following_parents, source: :connection
+    has_many :my_parents, through: :parents, source: :connection
     
-    has_many :following_children, class_name: "Child", 
+    has_many :children, class_name: "Child", 
                                     foreign_key: "person_id", 
                                     dependent: :destroy
-    has_many :my_children, through: :following_children, source: :connection
+    has_many :my_children, through: :children, source: :connection
     
     def share(micropost)
-        following_experiences.create(micropost_id: micropost.id)
-    end
-    
-    def experience(param)
-        self.transaction do
-            micropost = following_microposts.build(param)
-            experiences.find_or_create_by(micropost_id: micropost.id)
-            micropost.save!
-        end
+        experiences.create(micropost_id: micropost.id)
     end
 end

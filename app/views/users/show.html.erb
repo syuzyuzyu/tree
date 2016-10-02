@@ -27,13 +27,28 @@
       
       　　<%= f.label :image %>
       　　<%= f.file_field :image %>
+      　　<select multiple class="form-control">
+      　　    <% @user.person.following_microposts.each do |micropost| %>
+              <option>1</option>
+            <% end %>
+          </select>
         </div>
         <%= f.submit "Post", class: "btn btn-primary" %>
       <% end %>
       <h3>Microposts</h3>
+      <%= image_tag(@user.person.image , alt: "") %>
+      <%= @user.person %>
       <ol class="microposts">
-        <%= image_tag(@user.person.image , alt: "") %>
-        <%= @user.person %>
+        <% @user.person.following_microposts.each do |micropost| %>
+         <li>
+           <% if micropost.image? %>
+             <%= image_tag micropost.image.thumb.url %>
+             <%= reisize_for "public" + micropost.image.thumb.url %>
+            <% else %>
+             <%= image_tag 'noimage.gif' %>
+            <% end %>
+         </li>
+        <% end %>
       </ol>
   </div>
 </div>
