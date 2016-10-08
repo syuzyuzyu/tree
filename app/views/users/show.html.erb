@@ -21,16 +21,17 @@
         <div class="field">
           <%= f.label :title %>
       　　<%= f.text_field :title, placeholder: "題名" %>
-      
+
       　　<%= f.label :content %>
       　　<%= f.text_area :content, placeholder: "Compose new micropost..." %>
       
       　　<%= f.label :image %>
       　　<%= f.file_field :image %>
-      　　<select multiple class="form-control">
-      　　    <% @user.person.following_microposts.each do |micropost| %>
-              <option>1</option>
-            <% end %>
+      　　
+      　　<select multiple class="form-control" name="to_family[]">
+          <% @user.person.my_family.each do |family| %>
+              <option value="<%= family.id %>"><%= family.last_name + family.first_name %></option>
+          <% end %>
           </select>
         </div>
         <%= f.submit "Post", class: "btn btn-primary" %>

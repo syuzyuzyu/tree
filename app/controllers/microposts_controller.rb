@@ -3,12 +3,26 @@ class MicropostsController < ApplicationController
 
     def create
         #http://www.rokurofire.info/2014/02/26/rails_tablerelationship/
-        @micropost = current_person.following_microposts.build(micropost_params)
-        if current_person.save
+        param = micropost_params
+        rollback_count = 0
+        for person_id in params[:to_family]
+            debugger
+            person = Person.find(person_id)
+            #@micropost = current_person.following_microposts.build(micropost_params)
+            @micropost = person.following_microposts.build(param)
+            if person.save
+                flash[:success] = "Micropost created!"
+                #redirect_to root_url
+            else
+              rollback_count += 1
+            end
+        end
+        if rollback_count == 0
             flash[:success] = "Micropost created!"
             redirect_to root_url
         else
-          redirect_to root_url
+            flash[:success] = "Micropost uncreated!"
+            redirect_to root_url
         end
     end
   

@@ -40,17 +40,17 @@ class Person < ActiveRecord::Base
     
     
     has_many :genes, class_name: "Gene", foreign_key: "person_id", dependent: :destroy
-    has_many :connection, through: :genes, source: :connection
+    has_many :my_family, through: :genes, source: :bond
     
     has_many :parents, class_name: "Parent", 
                                     foreign_key: "person_id", 
                                     dependent: :destroy
-    has_many :my_parents, through: :parents, source: :connection
+    has_many :my_parents, through: :parents, source: :bond
     
     has_many :children, class_name: "Child", 
                                     foreign_key: "person_id", 
                                     dependent: :destroy
-    has_many :my_children, through: :children, source: :connection
+    has_many :my_children, through: :children, source: :bond
     
     def share(micropost)
         experiences.create(micropost_id: micropost.id)

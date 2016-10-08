@@ -1,5 +1,6 @@
 User.create!(name:  "Example User",
              email: "example@railstutorial.org",
+             person_id:"1",
              password:              "foobar",
              password_confirmation: "foobar",
              admin:     true,
@@ -52,11 +53,10 @@ pserson9.experiences.find_or_create_by(micropost_id: post1.id)
 pserson10.experiences.find_or_create_by(micropost_id: post1.id)
 pserson11.experiences.find_or_create_by(micropost_id: post1.id)
 
-#以下エラー
 pserson1.marriages.find_or_create_by(spouse_id: pserson5.id)
 pserson5.marriages.find_or_create_by(spouse_id: pserson1.id)
 
-pserson1.parents.find_or_create_by(connection_id: pserson10.id)
-pserson1.parents.find_or_create_by(connection_id: pserson11.id)
+pserson1.parents.find_or_create_by(bond_id: pserson10.id)
+pserson1.parents.find_or_create_by(bond_id: pserson11.id)
 
-pserson1.children.find_or_create_by(connection_id: pserson3.id)
+pserson1.children.find_or_create_by(bond_id: pserson3.id)

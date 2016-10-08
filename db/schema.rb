@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930105809) do
+ActiveRecord::Schema.define(version: 20161005125744) do
 
   create_table "experiences", force: :cascade do |t|
     t.integer  "person_id"
@@ -26,14 +26,14 @@ ActiveRecord::Schema.define(version: 20160930105809) do
 
   create_table "genes", force: :cascade do |t|
     t.integer  "person_id"
-    t.integer  "connection_id"
+    t.integer  "bond_id"
     t.string   "type"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "genes", ["connection_id"], name: "index_genes_on_connection_id"
-  add_index "genes", ["person_id", "connection_id", "type"], name: "index_genes_on_person_id_and_connection_id_and_type", unique: true
+  add_index "genes", ["bond_id"], name: "index_genes_on_bond_id"
+  add_index "genes", ["person_id", "bond_id", "type"], name: "index_genes_on_person_id_and_bond_id_and_type", unique: true
   add_index "genes", ["person_id"], name: "index_genes_on_person_id"
 
   create_table "invites", force: :cascade do |t|
