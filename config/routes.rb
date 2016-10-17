@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  #get 'trees/index'
+
   get 'password_resets/new'
 
   get 'password_resets/edit'
@@ -15,5 +17,6 @@ Rails.application.routes.draw do
   resources :users, except: [:index]
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
+  resources :trees, only: [:index]
   resources :microposts
 end
