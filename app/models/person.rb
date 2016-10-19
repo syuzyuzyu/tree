@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
     has_many :marriages, class_name: "Marriage", 
                                     foreign_key: "person_id", 
                                     dependent: :destroy
-    has_many :following_spouses, through: :marriages, source: :spouse
+    has_many :my_spouses, through: :marriages, source: :spouse
     
     has_many :marriaged, class_name: "Marriage", 
                                     foreign_key: "spouse_id", 
