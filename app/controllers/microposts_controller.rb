@@ -30,6 +30,7 @@ class MicropostsController < ApplicationController
     def sample
         #Nested Transactionってよくわからん from http://qiita.com/huydx/items/d946970d130b7dabe7ec 
         #２モデル回たら2モデルともロールバックする
+
         Person.transaction do
             User.transaction do
                 @preson.save!
@@ -39,7 +40,7 @@ class MicropostsController < ApplicationController
         rescue => e
         render 'new'
         ActiveRecord::Rollback
-        
+ 
         
         Person.transaction do
             @micropost = current_person.following_microposts.build(micropost_params)

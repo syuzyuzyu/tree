@@ -20,6 +20,11 @@
 #
 
 class Person < ActiveRecord::Base
+    validates :first_name, length: { maximum: 30 }
+    validates :last_name, length: { maximum: 30 }
+    #validates :gender, numericality: { only_integer: true }, inclusion: { in: [1,2] }
+    #validate :birth_date_is_valid_datetime
+    
     belongs_to :user
     mount_uploader :image, ImageUploader
     has_many :experiences, class_name: "Experience", 
@@ -54,5 +59,11 @@ class Person < ActiveRecord::Base
     
     def share(micropost)
         experiences.create(micropost_id: micropost.id)
+    end
+    
+    private
+    
+    def birth_date_is_valid_datetime
+      errors.add(:birth_date, 'must be a valid datetime') if ((DateTime.parse(birth_date) rescue ArgumentError) == ArgumentError)
     end
 end

@@ -4,14 +4,14 @@
     <% @parents.each do |person| %>
         <% if person.gender == 1 %>
         <% end %>
-        <div class="col-md-1">
+        <div class="col-md-<%= (12/@parents.count) - 1 %>">
         <%= person.first_name  %>
         <%= person.birth_date  %>
         <%= person.birth_place  %>
         </div>
     <% end %>
     <div class="col-md-1">
-        <%= link_to "tree", trees_path %>
+        <%= link_to "追加する", new_person_path+"?type=parent" , class: "btn btn-default btn-lg active", role: "button" %>
     </div>
     </div>
 </section>
@@ -27,6 +27,7 @@
     <h2>Partner</h2>
     <%= @spouse.birth_date  %>
     <%= @spouse.birth_place  %>
+    <%= link_to "追加する", new_person_path+"?type=spouse" , class: "btn btn-default btn-lg active", role: "button" %>
   </div>
 </div>
 
@@ -37,10 +38,13 @@
         <% if person.gender == 1 %>
         <% end %>
         <div class="col-md-1">
-            <h2><%= person.first_name  %></h2>
+            <h2><%= link_to person.first_name, edit_person_path(person.id) , class: "" %></h2>
             <%= person.birth_date  %>
             <%= person.birth_place  %>
         </div>
     <% end %>
+        <div class="col-md-1">
+        <%= link_to "追加する", new_person_path+"?type=child" , class: "btn btn-default btn-lg active", role: "button" %>
+        </div>
     </div>
 </section>
