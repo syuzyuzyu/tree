@@ -31,12 +31,23 @@ class PeopleController < ApplicationController
   end
 
   def update
+    @person = Person.find(params[:id])
+    if @person.update_attributes(person_params)
+      # 更新に成功したときの処理
+      render 'edit'
+    else
+      render 'edit'
+    end
   end
 
   def edit
+    @person = Person.find(params[:id])
   end
 
   def destroy
+    Person.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to trees_path
   end
   
   private

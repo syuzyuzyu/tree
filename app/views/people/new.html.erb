@@ -3,37 +3,6 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@person) do |f| %>
-      <%= hidden_field_tag :type, @type %>
-        
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name, class: 'form-control' %>
-
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name, class: 'form-control' %>
-
-      <%= f.label :birth_date %>
-      <%= f.date_field :birth_date, value: Time.mktime(1990, 01, 01, 00, 00, 00).strftime("%Y-%m-%d"), class: 'form-control' %>
-      
-      <%= f.label :gender %>
-      <%= f.text_field :gender, class: 'form-control' %>
-      
-      <%= f.label :birth_place %>
-      <%= f.text_field :birth_place, class: 'form-control' %>
-      
-      <%= f.label :city %>
-      <%= f.text_field :city, class: 'form-control' %>
-      
-      <%= f.label :cuntry %>
-      <%= f.text_field :cuntry, class: 'form-control' %>
-      
-      <%= f.label :summary %>
-      <%= f.text_area :summary, class: 'form-control' %>
-      <% if @type == "spouse" %>
-      <label>結婚した日</label>
-      <%= date_field_tag :start, Date.today, class: 'form-control' %>
-      <% end %>
-      <%= f.submit "Create my account", class: "btn btn-primary" %>
-    <% end %>
+    <%= render 'input_form' %>
   </div>
 </div>
