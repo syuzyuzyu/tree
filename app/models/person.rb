@@ -36,12 +36,12 @@ class Person < ActiveRecord::Base
     has_many :marriages, class_name: "Marriage", 
                                     foreign_key: "person_id", 
                                     dependent: :destroy
-    has_many :my_spouses, through: :marriages, source: :spouse
+    has_many :my_spouses, through: :marriages, source: :person
     
     has_many :marriaged, class_name: "Marriage", 
                                     foreign_key: "spouse_id", 
                                     dependent: :destroy
-    has_many :followed_spouses, through: :marriaged, source: :person
+    has_many :followed_spouses, through: :marriaged, source: :spouse
     
     
     has_many :genes, class_name: "Gene", foreign_key: "person_id", dependent: :destroy
@@ -51,11 +51,21 @@ class Person < ActiveRecord::Base
                                     foreign_key: "person_id", 
                                     dependent: :destroy
     has_many :my_parents, through: :parents, source: :bond
-    
+
+    has_many :done_parents, class_name: "Parent", 
+                                    foreign_key: "bond_id", 
+                                    dependent: :destroy
+    has_many :done_my_parents, through: :done_parents, source: :person
+ 
     has_many :children, class_name: "Child", 
                                     foreign_key: "person_id", 
                                     dependent: :destroy
     has_many :my_children, through: :children, source: :bond
+    
+    has_many :done_children, class_name: "Child", 
+                                    foreign_key: "bond_id", 
+                                    dependent: :destroy
+    has_many :done_my_children, through: :done_children, source: :person
     
     def share(micropost)
         experiences.create(micropost_id: micropost.id)

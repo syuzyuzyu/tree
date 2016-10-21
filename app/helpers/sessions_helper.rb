@@ -4,6 +4,10 @@ module SessionsHelper
     session[:user_id] = user.id
   end
 
+  def tree_user_in(person)
+    session[:tree_person_id] = person.id
+  end
+  
     # ランダムなトークンを返す
   def User.new_token
     SecureRandom.urlsafe_base64
@@ -27,9 +31,19 @@ module SessionsHelper
       end
     end
   end
+  
   def current_person
-    @current_person = current_user.person
+    @current_person ||= current_user.person
   end
+  
+  def tree_person
+    if (person_id = session[:tree_person_id])
+      @tree_person ||= Person.find_by(id: person_id)
+    else 
+      @tree_person = current_person
+    end
+  end
+  
   # ユーザーがログインしていればtrue、その他ならfalseを返す
   def logged_in?
     !current_user.nil?
@@ -38,8 +52,14 @@ module SessionsHelper
   def log_out
     session.delete(:user_id)
     @current_user = nil
+    @current_person = nil
   end
 
+  def tree_user_out
+    session.delete(:tree_person_id)
+    @tree_person = nil
+  end
+  
   # 永続的セッションを破棄する
   def forget(user)
     user.forget

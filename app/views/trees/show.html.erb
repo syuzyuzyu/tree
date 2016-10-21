@@ -5,7 +5,7 @@
         <% if person.gender == 1 %>
         <% end %>
         <div class="col-md-<%= (12/@parents.count) - 1 %>">
-        <%= person.first_name  %>
+        <%= link_to person.first_name, tree_path(person.id) , class: "" %>
         <%= person.birth_date  %>
         <%= person.birth_place  %>
         </div>
@@ -25,9 +25,12 @@
     <%= image_tag(current_person.image) %></div>
   <div class="col-xs-6 col-md-4">
     <h2>Partner</h2>
-    <%= @spouse.birth_date  %>
-    <%= @spouse.birth_place  %>
-    <%= link_to "追加する", new_person_path+"?type=spouse" , class: "btn btn-default btn-lg active", role: "button" %>
+    <% unless @spouse.nil? %>
+        <%= link_to @spouse.first_name, tree_path(@spouse.id) , class: "" %>
+        <%= @spouse.birth_date  %>
+        <%= @spouse.birth_place  %>
+        <%= link_to "追加する", new_person_path+"?type=spouse" , class: "btn btn-default btn-lg active", role: "button" %>
+    <% end %>
   </div>
 </div>
 
@@ -38,7 +41,8 @@
         <% if person.gender == 1 %>
         <% end %>
         <div class="col-md-1">
-            <h2><%= link_to person.first_name, edit_person_path(person.id) , class: "" %></h2>
+            <h2><%= link_to person.first_name, tree_path(person.id) , class: "" %></h2>
+            <%= link_to "編集", edit_person_path(person.id) , class: "" %>
             <%= person.birth_date  %>
             <%= person.birth_place  %>
         </div>

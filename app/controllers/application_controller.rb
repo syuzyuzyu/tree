@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
       redirect_to login_url
     end
   end
+  
+  def spouse?(person)
+    !person.marriages.empty?
+  end
 end

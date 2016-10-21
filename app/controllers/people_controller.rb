@@ -5,7 +5,7 @@ class PeopleController < ApplicationController
   end
   
   def create
-    debugger
+
     type = params[:type]
 
     #  Person.transaction do
@@ -22,11 +22,10 @@ class PeopleController < ApplicationController
     #    render 'new'
     if type == "spouse" 
       add_spouse
-    elsif type == "parent" || type == "child"
-      @person = add_family(type) 
-      if current_person.save
-        redirect_to trees_path
-      end
+    elsif type == "parent"
+      add_parent
+    elsif type == "child"
+      add_child
     end
   end
 
@@ -47,8 +46,10 @@ class PeopleController < ApplicationController
   def destroy
     Person.find(params[:id]).destroy
     flash[:success] = "User deleted"
-    redirect_to trees_path
+    redirect_to tree_path(tree_person.id)
   end
+  
+  
   
   private
 
@@ -59,29 +60,51 @@ class PeopleController < ApplicationController
   
   def add_spouse
     Person.transaction do
-      @person = current_person.my_spouses.build(person_params)
+      person = tree_person.my_spouses.build(person_params)
        Marriage.transaction do
-          @person.save!
-          marriage = current_person.marriages.build(person_id: current_person.id, spouse_id: @person.id, start: params[:start])#TODO marriageのinputCheck
-          marriage.save!
+          person.save!
+          #marriage = tree_person.marriages.build(person_id: tree_person.id, spouse_id: @person.id, start: params[:start])#TODO marriageのinputCheck
+          #marriage.save!
+          tree_person.marriages.build(person_id: tree_person.id, spouse_id: person.id, start: params[:start])
+          tree_person.save!
+          person.marriages.build(person_id: person.id, spouse_id: tree_person.id, start: params[:start])
+          person.save!
        end
     end
-    redirect_to trees_path
+    redirect_to tree_path(tree_person.id)
     rescue => e
     render text: e.message
   end
   
-  def add_family(type)
-    case type
-    when "parent" then 
-      current_person.my_parents.build(person_params)
-    when "child" then "child"
-      current_person.my_children.build(person_params)
-    #when "spouse" then "spouse"
-     # current_person.marriaged.build(person_params)
-    else
-      new Person
+  def add_parent
+    Person.transaction do
+      person = tree_person.my_parents.build(person_params)
+      tree_person.save!
+      person.children.build(person_id: person.id, bond_id: tree_person.id)
+      person.save!
     end
+    redirect_to tree_path(tree_person.id)
+    rescue => e
+    render text: e.message
+  end
+  
+  def add_child
+    Person.transaction do
+      person = tree_person.my_children.build(person_params)
+      tree_person.save!
+      person.parents.build(person_id: person.id, bond_id: tree_person.id)
+      person.save!
+      if spouse?(tree_person)
+        spouse = tree_person.marriages.where(end: nil).order(start: :desc).first.spouse
+        spouse.children.build(person_id: spouse.id, bond_id: person.id)
+        spouse.save!
+        person.parents.build(person_id: person.id, bond_id: spouse.id)
+        person.save!
+      end
+    end
+    redirect_to tree_path(tree_person.id)
+    rescue => e
+    render text: e.message
   end
   
   def type_param
@@ -92,8 +115,6 @@ class PeopleController < ApplicationController
     else
       ""
     end
-
-    #params.fetch(:article, {}).permit(:headline, :content)
   end
   
 end

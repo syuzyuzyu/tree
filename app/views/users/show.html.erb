@@ -7,7 +7,7 @@
       </h1>
       <span>
         <%= link_to "follow", edit_user_path(@user.id) %>
-        <%= link_to "tree", trees_path %>
+        <%= link_to "tree", tree_path(@user.id) %>
       </span>
       <dl>
         <dt>メールアドレス</dt><dd><%= @user.email %></dd>
